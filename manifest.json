@@ -1,0 +1,10 @@
+{
+    "manifest_version": 3,
+    "name": "Pokemon Type Matchup",
+    "description": "Find the best type effectiveness against a certain Pokemon type",
+    "version": "1.0",
+    "action": {
+        "default_popup": "pokemonTypeMatchup.html",
+        "default_icon": "pokemonTypeMatchup.png"
+    }
+}
