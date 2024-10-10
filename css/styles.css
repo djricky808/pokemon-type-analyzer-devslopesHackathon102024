@@ -1,0 +1,19 @@
+body {
+  width: 500px;
+  margin: 0 auto;
+}
+
+.logo,
+h1 {
+  display: block;
+  margin: auto;
+}
+
+h1 {
+  text-align: center;
+}
+
+.logo {
+  width: 200px;
+  height: 200px;
+}
