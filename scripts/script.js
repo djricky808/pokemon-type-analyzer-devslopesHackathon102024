@@ -26,16 +26,18 @@ pokemonDropdown2.innerHTML += types.map(
 );
 
 let selectedType1 = '';
+let selectedType2 = '';
 disableSecondTypeSelection();
 
 pokemonDropdown1.addEventListener("change", ()=> {selectedType1 = pokemonDropdown1.value;
-  console.log(selectedType1);
   if (selectedType1 === ""){
     disableSecondTypeSelection()
   } else {
   enableSecondTypeSelection();
   }
 })
+
+pokemonDropdown2.addEventListener("change", ()=> {selectedType2= pokemonDropdown2.value})
 
 function enableSecondTypeSelection() {
   pokemonDropdown2.disabled = false;
