@@ -2,6 +2,7 @@ body {
   width: 500px;
   margin: 0 auto;
   background-color: darkgrey;
+  font-family: "Galindo", sans-serif;
 }
 
 .logo,
@@ -17,4 +18,41 @@ h1 {
 .logo {
   width: 200px;
   height: 200px;
+  border-radius: 20%;
+}
+
+.type-submission-form {
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(125, 11, 11);
+  height: 300px;
+  justify-content: space-evenly;
+}
+
+.select-type-main {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.select-type {
+  display: flex;
+  flex-direction: column;
+}
+
+.select-type label{
+  color:white;
+  font-size: 20px;
+}
+
+.type-submission-form button {
+  font-size: 20px;
+  font-family: "Galindo", sans-serif;
+  border-radius: 8px;
+  width: 50%;
+  margin: 0 auto;
+}
+
+.type-submission-form button:hover {
+  background-color: yellow;
+  cursor: pointer;
 }

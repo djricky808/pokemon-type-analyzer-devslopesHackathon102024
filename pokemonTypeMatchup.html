@@ -1,31 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pokemon Type Matchups</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/types.css">
-</head>
-<body>
-    <img class="logo" src="images/PokemonTypeMatchuplogoMed.png" alt="Pokemon Type Matchup Logo">
-    <h1>Pokemon Type Matchup Analyzer</h1>
-    <form action="">
-        <div class="select-type-main">
-            <div class="select-type-1">
-                <label for="type1">Select First Type</label>
-                <select class="pokemon-dropdown" value="type1" required>
-                    <option value="">---</option>
-                </select>
-            </div>
-            <div class="select-type-2">
-                <label for="type2">Select Second  Type</label>
-                <select class="pokemon-dropdown" value="type2"></select>
-            </div>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/types.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Galindo&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <img
+      class="logo"
+      src="images/PokemonTypeMatchuplogoMed.png"
+      alt="Pokemon Type Matchup Logo"
+    />
+    <h1>Pokemon Type Analyzer</h1>
+    <form class="type-submission-form">
+      <div class="select-type-main">
+        <div class="select-type">
+          <label for="type1">Select First Type</label>
+          <select class="pokemon-dropdown1" value="type1" required>
+            <option value="">----</option>
+          </select>
         </div>
-        <button onclick=>Calculate Matchups</button>
-
+        <div class="select-type">
+          <label for="type2">Select Second Type</label>
+          <select class="pokemon-dropdown2" value="type2">
+            <option value="">----</option>
+          </select>
+        </div>
+      </div>
+      <button>Calculate Matchups</button>
     </form>
     <script type="module" src="scripts/script.js"></script>
-</body>
+  </body>
 </html>
