@@ -83,23 +83,39 @@ function determineTypeDamage(type1, type2) {
   console.log(type2Defenses);
   let damageTotalbyType = [];
 
-  for(let i=0; i< type1Defenses.length ; i++){
-    const [type, multiplier] = type1Defenses[i]    
-    if(type2Defenses.length > 0){
-      damageTotalbyType.push([type, multiplier*type2Defenses[i][1]])
+  for (let i = 0; i < type1Defenses.length; i++) {
+    const [type, multiplier] = type1Defenses[i];
+    if (type2Defenses.length > 0) {
+      damageTotalbyType.push([type, multiplier * type2Defenses[i][1]]);
     } else {
       damageTotalbyType.push([type, multiplier]);
     }
   }
   console.log(damageTotalbyType);
 
-  const quadrupleDamage = damageTotalbyType.filter((type) => type[1] === 4);
-  const doubleDamage = damageTotalbyType.filter((type) => type[1] === 2);
-  const normalDamage = damageTotalbyType.filter((type) => type[1] === 1);
-  const halfDamage = damageTotalbyType.filter((type) => type[1] === 0.5);
-  const quarterDamage = damageTotalbyType.filter((type) => type[1] === 0.25);
-  const noDamage = damageTotalbyType.filter((type) => type[1] === 0);
+  let quadrupleDamage = [];
+  let doubleDamage = [];
+  let normalDamage = [];
+  let halfDamage = [];
+  let quarterDamage = [];
+  let noDamage = [];
 
+  damageTotalbyType.forEach((attackType) => {
+    let [type, multiplier] = attackType;
+    if (multiplier === 4) {
+      quadrupleDamage.push(type);
+    } else if (multiplier === 2) {
+      doubleDamage.push(type);
+    } else if (multiplier === 1) {
+      normalDamage.push(type);
+    } else if (multiplier === 0.5) {
+      halfDamage.push(type);
+    } else if (multiplier === 0.25) {
+      quarterDamage.push(type);
+    } else {
+      noDamage.push(type);
+    }
+  });
   console.log(quadrupleDamage);
   console.log(doubleDamage);
   console.log(normalDamage);
