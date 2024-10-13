@@ -21,7 +21,7 @@ export const typeEffectiveness = {
     ghost: 0,
   },
   fire: {
-    normal: 0,
+    normal: 1,
     fire: 0.5,
     water: 2,
     grass: 0.5,

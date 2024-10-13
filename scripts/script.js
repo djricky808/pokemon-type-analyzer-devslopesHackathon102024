@@ -12,9 +12,31 @@ typeMatchups.forEach((type) => {
 
 console.log(types);
 
+const typeSelectionSection = document.getElementById("typeSelectionSection");
+const typeResultsSection = document.getElementById('typeResultsSection');
+
+
+function hideSection(section){
+  return section.classList.add('hide-section')
+}
+
+function showSection(section){
+  return section.classList.remove("hide-section");
+}
+
+//DOM Elements for Type Selection
 const pokemonDropdown1 = document.querySelector(".pokemon-dropdown1");
 const pokemonDropdown2 = document.querySelector(".pokemon-dropdown2");
 const pokemonForm = document.querySelector(".type-submission-form");
+
+//DOM Elements for Type Results
+const quadrupleDamageDiv = document.querySelector('.quadruple-damage');
+const doubleDamageDiv = document.querySelector(".double-damage");
+const normalDamageDiv = document.querySelector(".normal-damage");
+const halfDamageDiv = document.querySelector(".half-damage");
+const quarterDamageDiv = document.querySelector(".quarter-damage");
+const noDamageDiv = document.querySelector(".no-damage");
+
 
 pokemonDropdown1.innerHTML += types.map(
   (type) => `<option value=${type}>${type}</option>`
@@ -23,6 +45,7 @@ pokemonDropdown1.innerHTML += types.map(
 pokemonDropdown2.innerHTML += types.map(
   (type) => `<option value=${type}>${type}</option>`
 );
+
 
 let selectedType1 = "";
 let selectedType2 = "";
@@ -48,6 +71,8 @@ pokemonDropdown2.addEventListener("change", () => {
   }
 });
 
+
+
 function enableSecondTypeSelection() {
   pokemonDropdown2.disabled = false;
   for (let option of pokemonDropdown2.options) {
@@ -70,22 +95,24 @@ function disableSecondTypeSelection() {
 pokemonForm.addEventListener("submit", (e) => {
   e.preventDefault();
   determineTypeDamage(selectedType1, selectedType2);
+  hideSection(typeSelectionSection);
+  showSection(typeResultsSection);
 });
 
 function determineTypeDamage(type1, type2) {
   let type1Defenses = Object.entries(
     typeMatchups.filter((type) => type[0] === type1)[0][1]
   );
-  let type2Defenses = Object.entries(
-    typeMatchups.filter((type) => type[0] === type2)[0][1]
-  );
+
   console.log(type1Defenses);
-  console.log(type2Defenses);
   let damageTotalbyType = [];
 
   for (let i = 0; i < type1Defenses.length; i++) {
     const [type, multiplier] = type1Defenses[i];
-    if (type2Defenses.length > 0) {
+    if (type2) {
+        let type2Defenses = Object.entries(
+          typeMatchups.filter((type) => type[0] === type2)[0][1]
+        );
       damageTotalbyType.push([type, multiplier * type2Defenses[i][1]]);
     } else {
       damageTotalbyType.push([type, multiplier]);
@@ -122,4 +149,8 @@ function determineTypeDamage(type1, type2) {
   console.log(halfDamage);
   console.log(quarterDamage);
   console.log(noDamage);
+
+  quadrupleDamage.map((type)=> {
+
+  })
 }

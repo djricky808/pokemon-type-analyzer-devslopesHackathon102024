@@ -14,29 +14,52 @@
     />
   </head>
   <body>
-    <img
-      class="logo"
-      src="images/PokemonTypeMatchuplogoMed.png"
-      alt="Pokemon Type Matchup Logo"
-    />
-    <h1>Pokemon Type Analyzer</h1>
-    <form class="type-submission-form">
-      <div class="select-type-main">
-        <div class="select-type">
-          <label for="type1">Select First Type</label>
-          <select class="pokemon-dropdown1" value="type1" required>
-            <option value="">----</option>
-          </select>
+    <section id="typeSelectionSection">
+      <img
+        class="logo"
+        src="images/PokemonTypeMatchuplogoMed.png"
+        alt="Pokemon Type Matchup Logo"
+      />
+      <h1>Pokemon Type Analyzer</h1>
+      <form class="type-submission-form">
+        <div class="select-type-main">
+          <div class="select-type">
+            <label for="type1">Select First Type</label>
+            <select class="pokemon-dropdown1" value="type1" required>
+              <option value="">----</option>
+            </select>
+          </div>
+          <div class="select-type">
+            <label for="type2">Select Second Type</label>
+            <select class="pokemon-dropdown2" value="type2">
+              <option value="">----</option>
+            </select>
+          </div>
         </div>
-        <div class="select-type">
-          <label for="type2">Select Second Type</label>
-          <select class="pokemon-dropdown2" value="type2">
-            <option value="">----</option>
-          </select>
-        </div>
+        <button type="submit">Calculate Matchups</button>
+      </form>
+    </section>
+    <section id="typeResultsSection" class="hide-section">
+      <h1>Damage Results- Under Normal Circumstances</h1>
+      <div class="quadruple-damage">
+        <h3>Damage X4</h3>
       </div>
-      <button type="submit">Calculate Matchups</button>
-    </form>
+      <div class="double-damage">
+        <h3>Damage X2</h3>
+      </div>
+      <div class="normal-damage">
+        <h3>Damage X1</h3>
+      </div>
+      <div class="half-damage">
+        <h3>Damage X 1/2</h3>
+      </div>
+      <div class="quarter-damage">
+        <h3>Damage X 1/4</h3>
+      </div>
+      <div class="no-damage">
+        <h3>Damage X 0</h3>
+      </div>
+    </section>
     <script type="module" src="scripts/script.js"></script>
   </body>
 </html>
