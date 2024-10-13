@@ -55,6 +55,7 @@ h1 {
   border-radius: 8px;
   width: 50%;
   margin: 0 auto;
+  background-color: white;
 }
 
 .type-submission-form button:hover {
