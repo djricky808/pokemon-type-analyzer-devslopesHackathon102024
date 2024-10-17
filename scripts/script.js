@@ -1,4 +1,5 @@
 import { typeEffectiveness } from "./typeEffectiveness.js";
+import { fetchAllPokemon } from "./api.js";
 
 const typeMatchups = Object.entries(typeEffectiveness);
 console.log(typeEffectiveness);
@@ -27,14 +28,6 @@ function showSection(section) {
 const pokemonDropdown1 = document.querySelector(".pokemon-dropdown1");
 const pokemonDropdown2 = document.querySelector(".pokemon-dropdown2");
 const pokemonForm = document.querySelector(".type-submission-form");
-
-//DOM Elements for Type Results
-const quadrupleDamageDiv = document.querySelector(".quadruple-damage");
-const doubleDamageDiv = document.querySelector(".double-damage");
-const normalDamageDiv = document.querySelector(".normal-damage");
-const halfDamageDiv = document.querySelector(".half-damage");
-const quarterDamageDiv = document.querySelector(".quarter-damage");
-const noDamageDiv = document.querySelector(".no-damage");
 
 pokemonDropdown1.innerHTML += types.map(
   (type) => `<option value=${type}>${type}</option>`
@@ -92,7 +85,16 @@ pokemonForm.addEventListener("submit", (e) => {
   determineTypeDamage(selectedType1, selectedType2);
   hideSection(typeSelectionSection);
   showSection(typeResultsSection);
+  findPokemonWithMatchingType(selectedType1, selectedType2);
 });
+
+//DOM Elements for Type Results
+const quadrupleDamageDiv = document.querySelector(".quadruple-damage");
+const doubleDamageDiv = document.querySelector(".double-damage");
+const normalDamageDiv = document.querySelector(".normal-damage");
+const halfDamageDiv = document.querySelector(".half-damage");
+const quarterDamageDiv = document.querySelector(".quarter-damage");
+const noDamageDiv = document.querySelector(".no-damage");
 
 function determineTypeDamage(type1, type2) {
   let type1Defenses = Object.entries(
@@ -160,3 +162,6 @@ function mapOutTypes (dmgMultiplierArr, dmgMultiplierDiv){
     dmgMultiplierDiv.innerHTML += `<div class="type-block ${type}"><h2>${type}</h2></div>`;
   });
 }
+
+// function findPokemonWithMatchingType(type1, type2) {
+//   fetchAllPokemon().then()
