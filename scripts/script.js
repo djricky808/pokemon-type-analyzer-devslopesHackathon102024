@@ -1,5 +1,18 @@
+//Set up Types
 import { typeEffectiveness } from "./typeEffectiveness.js";
+const typeMatchups = Object.entries(typeEffectiveness);
+console.log(typeEffectiveness);
 
+const types = [];
+
+typeMatchups.forEach((type) => {
+  const [pokemonType] = type;
+  types.push(pokemonType);
+});
+
+console.log(types);
+
+//Set up API call.
 const URL = "https://pokeapi.co/api/v2/pokemon";
 
 function fetchAllPokemon() {
@@ -23,18 +36,6 @@ export const getPokemonData = (type1, type2) =>
       console.log("Pokemon not found", error);
     });
 
-const typeMatchups = Object.entries(typeEffectiveness);
-console.log(typeEffectiveness);
-
-const types = [];
-
-typeMatchups.forEach((type) => {
-  const [pokemonType] = type;
-  types.push(pokemonType);
-});
-
-console.log(types);
-
 let quadrupleDamage = [];
 let doubleDamage = [];
 let normalDamage = [];
@@ -42,9 +43,14 @@ let halfDamage = [];
 let quarterDamage = [];
 let noDamage = [];
 
+//DOM ELEMENTS FOR SECTION VISIBILITY
 const typeSelectionSection = document.getElementById("typeSelectionSection");
 const typeResultsSection = document.getElementById("typeResultsSection");
-const pokemonCount = document.querySelector(".pokemon-count");
+const matchingPokemonSection = document.getElementById(
+  "pokemon-of-matching-type"
+);
+const returnToTypeMatchup = document.getElementById("rtn-type-match");
+const returnToTypeSelection = document.getElementById("rtn-type-selection");
 
 function hideSection(section) {
   return section.classList.add("hide-section");
@@ -54,7 +60,21 @@ function showSection(section) {
   return section.classList.remove("hide-section");
 }
 
-//DOM Elements for Type Selection
+returnToTypeMatchup.addEventListener("click", () => {
+  hideSection(matchingPokemonSection);
+  showSection(typeResultsSection);
+});
+
+returnToTypeSelection.addEventListener("click", () => {
+  hideSection(typeResultsSection);
+  showSection(typeSelectionSection);
+  disableSecondTypeSelection();
+  pokemonDropdown1.value = "";
+});
+
+//TYPE SELECTION SECTION
+
+//DOM ELEMENTS FOR TYPE SELECTION
 const pokemonDropdown1 = document.querySelector(".pokemon-dropdown1");
 const pokemonDropdown2 = document.querySelector(".pokemon-dropdown2");
 const pokemonForm = document.querySelector(".type-submission-form");
@@ -119,14 +139,17 @@ pokemonForm.addEventListener("submit", (e) => {
   getPokemonData(selectedType1, selectedType2);
 });
 
-//DOM Elements for Type Results
+//MATCHUP RESULTS
+
+//DOM ELEMENTS FOR TYPE MATCHUP RESULTS
 const quadrupleDamageDiv = document.querySelector(".quadruple-damage");
 const doubleDamageDiv = document.querySelector(".double-damage");
 const normalDamageDiv = document.querySelector(".normal-damage");
 const halfDamageDiv = document.querySelector(".half-damage");
 const quarterDamageDiv = document.querySelector(".quarter-damage");
 const noDamageDiv = document.querySelector(".no-damage");
-const showPokemon = document.getElementById("show-pokemon");
+const pokemonCount = document.querySelector(".pokemon-count");
+const showPokemonButton = document.getElementById("show-pokemon");
 
 function resetDamageArrs() {
   quadrupleDamage = [];
@@ -136,7 +159,6 @@ function resetDamageArrs() {
   quarterDamage = [];
   noDamage = [];
 }
-
 
 function determineTypeDamage(type1, type2) {
   let type1Defenses = Object.entries(
@@ -191,19 +213,17 @@ function determineTypeDamage(type1, type2) {
 }
 
 function mapOutTypes(dmgMultiplierArr, dmgMultiplierDiv) {
-  dmgMultiplierDiv.innerHTML='';
+  dmgMultiplierDiv.innerHTML = "";
   dmgMultiplierArr.forEach((type) => {
     dmgMultiplierDiv.innerHTML += `<div class="type-block ${type}"><h2>${type}</h2></div>`;
   });
 }
 
+//FINDING POKEMON THAT CONTAIN THE TYPE
+
 //DOM ELEMENTS FOR POKEMON OF MATCHING TYPE
-const matchingPokemonSection = document.getElementById(
-  "pokemon-of-matching-type"
-);
 const randomPokemon = document.querySelector(".random-pokemon");
 const matchedTypes = document.querySelector(".matched-types");
-
 
 function getTypeFromPokemon(pokemon, type1, type2) {
   let pokemonThatMatchedSelectedTypes = [];
@@ -231,16 +251,17 @@ function getTypeFromPokemon(pokemon, type1, type2) {
   if (pokemonThatMatchedSelectedTypes.length === 0) {
     pokemonCount.innerHTML =
       "<h3>There are no Pokemon with this typing in Kanto!</h3>";
-    showPokemon.disabled = true;
+    showPokemonButton.disabled = true;
   } else {
-    pokemonCount.innerHTML = `<h3 > There are ${pokemonThatMatchedSelectedTypes.length} Pokemon with this typing in Kanto!</h3>`;
-    showPokemon.disabled = false;
+    pokemonCount.innerHTML = `
+    <h3 > There are ${pokemonThatMatchedSelectedTypes.length} Pokemon with this typing in Kanto!</h3>`;
+    showPokemonButton.disabled = false;
     setUpMatchingPokemon(pokemonThatMatchedSelectedTypes);
     pickRandomPokemon(pokemonThatMatchedSelectedTypes);
   }
 }
 
-showPokemon.addEventListener("click", () => {
+showPokemonButton.addEventListener("click", () => {
   hideSection(typeResultsSection);
   showSection(matchingPokemonSection);
 });
@@ -307,41 +328,35 @@ function makeCard(pokemon) {
 
   randomPokemon.innerHTML = `
     <div class="random-pokemon">
-    <h1>Featured Pokemon</h1>
+      <h1>Featured Pokemon</h1>
       <img class="random-pokemon-img" src=${pokemonImgUrl} alt=${pokemonName}/>
       <h1>${pokedexNumber}</h1>
       <h3>${pokemonName}</h3>
       <div class="type-frame">
-      <div class="type-block ${firstPokemonType}"><h2>${firstPokemonType}</h2></div>
-      ${
-        secondPokemonType
-          ? `<div class="type-block ${secondPokemonType}"><h2>${secondPokemonType}</h2></div>`
-          : ""
-      }
+        <div class="type-block ${firstPokemonType}"><h2>${firstPokemonType}</h2></div>
+        ${
+          secondPokemonType
+            ? `<div class="type-block ${secondPokemonType}"><h2>${secondPokemonType}</h2></div>`
+            : ""
+        }
       </div>
       <h1>Learn More!</h1>
       <ul class="pokemon-sites">
-          <li class="web-button bulbapedia"><a href=${bulbapediaURL} target='_blank'>
-            <img src="../images/120px-Bulbapedia_bulb.png" alt='Bulbapedia'>Bulbapedia</a><li>
-          <li class="web-button serebii"><a href=${serebiiURL} target='_blank'>
-            <img src="../images/serebii.png" alt='Serebii'>Serebii</a><li>
-          <li class="web-button smogon"><a href=${smogonURL}>
-            <img src="../images/smogon.png" alt='Smogon' target='_blank'>Smogon</a><li>
-        </ul>
+        <li class="web-button bulbapedia">
+          <a href=${bulbapediaURL} target='_blank'>
+            <img src="../images/120px-Bulbapedia_bulb.png" alt='Bulbapedia'/>Bulbapedia>
+          </a>
+        </li>
+        <li class="web-button serebii">
+          <a href=${serebiiURL} target='_blank'>
+            <img src="../images/serebii.png" alt='Serebii'/>Serebii
+          </a>
+        <li>
+        <li class="web-button smogon">
+          <a href=${smogonURL}>
+            <img src="../images/smogon.png" alt='Smogon' target='_blank'/>Smogon
+          </a>
+        <li>
+      </ul>
     </div>`;
 }
-
-const returnToTypeMatchup = document.getElementById("rtn-type-match");
-const returnToTypeSelection = document.getElementById("rtn-type-selection");
-
-returnToTypeMatchup.addEventListener("click", () => {
-  hideSection(matchingPokemonSection);
-  showSection(typeResultsSection);
-});
-
-returnToTypeSelection.addEventListener("click", () => {
-  hideSection(typeResultsSection);
-  showSection(typeSelectionSection);
-  disableSecondTypeSelection();
-  pokemonDropdown1.value = "";
-});
