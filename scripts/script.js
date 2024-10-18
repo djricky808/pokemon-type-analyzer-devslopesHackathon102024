@@ -1,5 +1,27 @@
 import { typeEffectiveness } from "./typeEffectiveness.js";
-import { fetchAllPokemon } from "./api.js";
+
+const URL = "https://pokeapi.co/api/v2/pokemon";
+
+function fetchAllPokemon() {
+  let promises = [];
+  for (let i = 1; i < 151; i++) {
+    let promise = fetch(`${URL}/${i}`);
+    promises.push(promise);
+  }
+  return Promise.all(promises);
+}
+
+export const getPokemonData = (type1, type2) =>
+  fetchAllPokemon()
+    .then((response) => {
+      return Promise.all(response.map((res) => res.json()));
+    })
+    .then((data) => {
+      getTypeFromPokemon(data, type1, type2);
+    })
+    .catch((error) => {
+      console.log("Pokemon not found", error);
+    });
 
 const typeMatchups = Object.entries(typeEffectiveness);
 console.log(typeEffectiveness);
@@ -37,8 +59,8 @@ pokemonDropdown2.innerHTML += types.map(
   (type) => `<option value=${type}>${type}</option>`
 );
 
-let selectedType1 = "";
-let selectedType2 = "";
+export let selectedType1 = "";
+export let selectedType2 = "";
 disableSecondTypeSelection();
 
 pokemonDropdown1.addEventListener("change", () => {
@@ -85,7 +107,7 @@ pokemonForm.addEventListener("submit", (e) => {
   determineTypeDamage(selectedType1, selectedType2);
   hideSection(typeSelectionSection);
   showSection(typeResultsSection);
-  findPokemonWithMatchingType(selectedType1, selectedType2);
+  getPokemonData(selectedType1, selectedType2);
 });
 
 //DOM Elements for Type Results
@@ -153,15 +175,73 @@ function determineTypeDamage(type1, type2) {
   mapOutTypes(halfDamage, halfDamageDiv);
   mapOutTypes(quarterDamage, quarterDamageDiv);
   mapOutTypes(noDamage, noDamageDiv);
-
 }
 
-
-function mapOutTypes (dmgMultiplierArr, dmgMultiplierDiv){
+function mapOutTypes(dmgMultiplierArr, dmgMultiplierDiv) {
   dmgMultiplierArr.forEach((type) => {
     dmgMultiplierDiv.innerHTML += `<div class="type-block ${type}"><h2>${type}</h2></div>`;
   });
 }
 
-// function findPokemonWithMatchingType(type1, type2) {
-//   fetchAllPokemon().then()
+//DOM ELEMENTS FOR POKEMON OF MATCHING TYPE
+const matchingPokemonSection = document.getElementById('pokemon-of-matching-type')
+const randomPokemon = document.getElementsByClassName('random-pokemon');
+const matchedTypes = document.getElementsByClassName('matched-types');
+const pureTypes = document.getElementsByClassName('pure-tpyes');
+
+function getTypeFromPokemon(pokemon, type1, type2) {
+  let pokemonThatMatchedSelectedTypes = [];
+  let purePokemonType = [];
+  pokemon.forEach((pokemon) => {
+    let firstPokemonType = pokemon.types[0].type.name;
+    let secondPokemonType = pokemon.types[1]?.type.name;
+
+    if (type2) {
+      if (firstPokemonType === type1 || firstPokemonType === type2) {
+        if (
+          (secondPokemonType && secondPokemonType === type1) ||
+          secondPokemonType === type2
+        ) {
+          pokemonThatMatchedSelectedTypes.push(pokemon);
+        }
+      }
+    } else {
+      if (firstPokemonType === type1) {
+        if (!secondPokemonType) {
+          purePokemonType.push(pokemon);
+        }
+        pokemonThatMatchedSelectedTypes.push(pokemon);
+      } else if (secondPokemonType === type1) {
+        pokemonThatMatchedSelectedTypes.push(pokemon);
+      }
+    }
+  });
+  console.log("--------DUAL TYPES----------");
+  setUpMatchingPokemon(pokemonThatMatchedSelectedTypes, "matching-types");
+  console.log("--------PURE TYPES----------");
+  setUpMatchingPokemon(purePokemonType, 'pure-types');
+  pickRandomPokemon(pokemonThatMatchedSelectedTypes);
+}
+
+function setUpMatchingPokemon(matchingPokemon, grouping) {
+  matchingPokemon.forEach((pokemon) => {
+    let pokemonName =
+      pokemon.forms[0].name.charAt(0).toUpperCase() +
+      pokemon.forms[0].name.slice(1);
+    let lcPokemonName = pokemonName.toLowerCase();
+    let pokedexNumber = pokemon.id.toString().padStart(3,'0');
+    console.log(pokedexNumber);
+    let bulbapediaURL = `https://bulbapedia.bulbagarden.net/wiki/${pokemonName}_(Pok%C3%A9mon)`; 
+    let serebiiURL = `https://www.serebii.net/pokedex/${pokedexNumber}.shtml`;
+    let smogonURL = `https://www.smogon.com/dex/rb/pokemon/${lcPokemonName}/`;
+
+    if (grouping === 'pure-types'){
+        
+    }
+  });
+}
+
+function pickRandomPokemon(matchingPokemon) {
+  let chooseRandomPokemon = Math.floor(Math.random()) * matchingPokemon.length;
+  console.log(matchingPokemon[chooseRandomPokemon]);
+}
