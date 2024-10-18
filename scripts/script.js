@@ -37,6 +37,7 @@ console.log(types);
 
 const typeSelectionSection = document.getElementById("typeSelectionSection");
 const typeResultsSection = document.getElementById("typeResultsSection");
+const pokemonCount = document.querySelector(".pokemon-count");
 
 function hideSection(section) {
   return section.classList.add("hide-section");
@@ -117,6 +118,7 @@ const normalDamageDiv = document.querySelector(".normal-damage");
 const halfDamageDiv = document.querySelector(".half-damage");
 const quarterDamageDiv = document.querySelector(".quarter-damage");
 const noDamageDiv = document.querySelector(".no-damage");
+const showPokemon = document.getElementById("show-pokemon");
 
 function determineTypeDamage(type1, type2) {
   let type1Defenses = Object.entries(
@@ -190,7 +192,6 @@ const matchingPokemonSection = document.getElementById(
 const randomPokemon = document.querySelector(".random-pokemon");
 const matchedTypes = document.querySelector(".matched-types");
 const pureTypes = document.querySelector(".pure-types");
-const pokemonCount = document.querySelector(".pokemon-count");
 
 function getTypeFromPokemon(pokemon, type1, type2) {
   let pokemonThatMatchedSelectedTypes = [];
@@ -221,13 +222,22 @@ function getTypeFromPokemon(pokemon, type1, type2) {
   });
   if (pokemonThatMatchedSelectedTypes.length === 0) {
     pokemonCount.innerHTML =
-      "<h3>There are no Pokemon with this typing in Kanto</h3>";
+      "<h3>There are no Pokemon with this typing in Kanto!</h3>";
+    showPokemon.disabled = true;
   } else {
+    pokemonCount.innerHTML = `<h3 > There are ${pokemonThatMatchedSelectedTypes.length} Pokemon with this typing in Kanto!</h3>`;
+    showPokemon.disabled = false;
     setUpMatchingPokemon(pokemonThatMatchedSelectedTypes, "matching-types");
     setUpMatchingPokemon(purePokemonType, "pure-types");
     pickRandomPokemon(pokemonThatMatchedSelectedTypes);
   }
 }
+
+showPokemon.addEventListener("click", () => {
+  console.log("I got clicked");
+  hideSection(typeResultsSection);
+  showSection(matchingPokemonSection);
+});
 
 function setUpMatchingPokemon(matchingPokemon, grouping) {
   if (grouping === "pure-types") {

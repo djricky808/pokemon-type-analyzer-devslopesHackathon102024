@@ -37,15 +37,18 @@
             </select>
           </div>
         </div>
-        <button type="submit">Calculate Matchups</button>
+        <button class='btn' type="submit">Calculate Matchups</button>
       </form>
     </section>
+
     <section id="typeResultsSection" class="hide-section">
-      <h1>Damage Results</h1>
       <div class="pokemon-encounter">
         <img class="pokeball" src="images/Pokeball.png" alt="Pokeball">
-        <div class ="pokemon-count"></div>
+        <div class ="pokemon-count">
+        </div>
+        <button id="show-pokemon" class="btn">Show Pokemon</button>
       </div>
+      <h1>Damage Results</h1>
       <p>(Under Normal Circumstances)</p>
       <div class="quadruple-damage-box">
         <h3>Damage X4</h3>
@@ -71,8 +74,9 @@
         <h3>Damage X 0</h3>
         <div class="no-damage damage-section"></div>
       </div>
+
     </section>
-    <section id="pokemon-of-matching-type" >
+    <section id="pokemon-of-matching-type" class="hide-section" >
       <div class="random-pokemon"></div>
       <div class="matched-types"></div>
       <div class="pure-types"></div>
