@@ -184,10 +184,12 @@ function mapOutTypes(dmgMultiplierArr, dmgMultiplierDiv) {
 }
 
 //DOM ELEMENTS FOR POKEMON OF MATCHING TYPE
-const matchingPokemonSection = document.getElementById('pokemon-of-matching-type')
-const randomPokemon = document.getElementsByClassName('random-pokemon');
-const matchedTypes = document.getElementsByClassName('matched-types');
-const pureTypes = document.getElementsByClassName('pure-tpyes');
+const matchingPokemonSection = document.getElementById(
+  "pokemon-of-matching-type"
+);
+const randomPokemon = document.querySelector(".random-pokemon");
+const matchedTypes = document.querySelector(".matched-types");
+const pureTypes = document.querySelector(".pure-types");
 
 function getTypeFromPokemon(pokemon, type1, type2) {
   let pokemonThatMatchedSelectedTypes = [];
@@ -219,29 +221,74 @@ function getTypeFromPokemon(pokemon, type1, type2) {
   console.log("--------DUAL TYPES----------");
   setUpMatchingPokemon(pokemonThatMatchedSelectedTypes, "matching-types");
   console.log("--------PURE TYPES----------");
-  setUpMatchingPokemon(purePokemonType, 'pure-types');
+  setUpMatchingPokemon(purePokemonType, "pure-types");
   pickRandomPokemon(pokemonThatMatchedSelectedTypes);
 }
 
 function setUpMatchingPokemon(matchingPokemon, grouping) {
+  if (grouping === "pure-types") {
+    pureTypes.innerHTML = "";
+  } else {
+    matchedTypes.innerHTML = "";
+  }
   matchingPokemon.forEach((pokemon) => {
     let pokemonName =
       pokemon.forms[0].name.charAt(0).toUpperCase() +
       pokemon.forms[0].name.slice(1);
     let lcPokemonName = pokemonName.toLowerCase();
-    let pokedexNumber = pokemon.id.toString().padStart(3,'0');
+
+    let pokedexNumber = pokemon.id.toString().padStart(3, "0");
     console.log(pokedexNumber);
-    let bulbapediaURL = `https://bulbapedia.bulbagarden.net/wiki/${pokemonName}_(Pok%C3%A9mon)`; 
+
+    let pokemonSpriteUrl =
+      pokemon.sprites.versions["generation-iii"]["firered-leafgreen"]
+        .front_default;
+
+    let bulbapediaURL = `https://bulbapedia.bulbagarden.net/wiki/${pokemonName}_(Pok%C3%A9mon)`;
     let serebiiURL = `https://www.serebii.net/pokedex/${pokedexNumber}.shtml`;
     let smogonURL = `https://www.smogon.com/dex/rb/pokemon/${lcPokemonName}/`;
 
-    if (grouping === 'pure-types'){
-        
-    }
+    let typeDivGroup = grouping === "pure-types" ? pureTypes : matchedTypes;
+
+    typeDivGroup.innerHTML += `
+      <div class="pokemon-tab">
+        <h3>${pokedexNumber}</h3>
+        <h3>${pokemonName}</h3>
+        <img src=${pokemonSpriteUrl} alt=${pokemonName}></img>
+      </div>`;
   });
 }
 
 function pickRandomPokemon(matchingPokemon) {
-  let chooseRandomPokemon = Math.floor(Math.random()) * matchingPokemon.length;
-  console.log(matchingPokemon[chooseRandomPokemon]);
+  console.log(matchingPokemon);
+  let randomPokemon = Math.floor(Math.random()) * matchingPokemon.length + 1;
+  makeCard(matchingPokemon[randomPokemon]);
+}
+
+function makeCard(pokemon) {
+  let pokemonName =
+    pokemon.forms[0].name.charAt(0).toUpperCase() +
+    pokemon.forms[0].name.slice(1);
+  let lcPokemonName = pokemonName.toLowerCase();
+
+  let pokedexNumber = pokemon.id.toString().padStart(3, "0");
+  console.log(pokedexNumber);
+
+  let pokemonImgUrl = pokemon.sprites.other["official-artwork"].front_default;
+
+  let bulbapediaURL = `https://bulbapedia.bulbagarden.net/wiki/${pokemonName}_(Pok%C3%A9mon)`;
+  let serebiiURL = `https://www.serebii.net/pokedex/${pokedexNumber}.shtml`;
+  let smogonURL = `https://www.smogon.com/dex/rb/pokemon/${lcPokemonName}/`;
+
+  randomPokemon.innerHTML = `
+    <div class="random-pokemon">
+      <img class="random-pokemon-img" src=${pokemonImgUrl} alt=${pokemonName}/>
+      <h1>${pokedexNumber}</h1>
+      <h3>${pokemonName}</h3>
+      <ul class="pokemon-sites">
+        <li><a href=${bulbapediaURL}>Bulbapedia<li>
+        <li><a href=${serebiiURL}>Serebii<li>
+        <li><a href=${smogonURL}>Smogon<li>
+      </ul>
+    </div>`;
 }
