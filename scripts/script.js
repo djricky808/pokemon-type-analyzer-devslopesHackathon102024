@@ -35,6 +35,13 @@ typeMatchups.forEach((type) => {
 
 console.log(types);
 
+let quadrupleDamage = [];
+let doubleDamage = [];
+let normalDamage = [];
+let halfDamage = [];
+let quarterDamage = [];
+let noDamage = [];
+
 const typeSelectionSection = document.getElementById("typeSelectionSection");
 const typeResultsSection = document.getElementById("typeResultsSection");
 const pokemonCount = document.querySelector(".pokemon-count");
@@ -60,8 +67,8 @@ pokemonDropdown2.innerHTML += types.map(
   (type) => `<option value=${type}>${type}</option>`
 );
 
-export let selectedType1 = "";
-export let selectedType2 = "";
+let selectedType1 = "";
+let selectedType2 = "";
 disableSecondTypeSelection();
 
 pokemonDropdown1.addEventListener("change", () => {
@@ -105,6 +112,7 @@ function disableSecondTypeSelection() {
 
 pokemonForm.addEventListener("submit", (e) => {
   e.preventDefault();
+  resetDamageArrs();
   determineTypeDamage(selectedType1, selectedType2);
   hideSection(typeSelectionSection);
   showSection(typeResultsSection);
@@ -119,6 +127,16 @@ const halfDamageDiv = document.querySelector(".half-damage");
 const quarterDamageDiv = document.querySelector(".quarter-damage");
 const noDamageDiv = document.querySelector(".no-damage");
 const showPokemon = document.getElementById("show-pokemon");
+
+function resetDamageArrs() {
+  quadrupleDamage = [];
+  doubleDamage = [];
+  normalDamage = [];
+  halfDamage = [];
+  quarterDamage = [];
+  noDamage = [];
+}
+
 
 function determineTypeDamage(type1, type2) {
   let type1Defenses = Object.entries(
@@ -140,13 +158,6 @@ function determineTypeDamage(type1, type2) {
     }
   }
   console.log(damageTotalbyType);
-
-  let quadrupleDamage = [];
-  let doubleDamage = [];
-  let normalDamage = [];
-  let halfDamage = [];
-  let quarterDamage = [];
-  let noDamage = [];
 
   damageTotalbyType.forEach((attackType) => {
     let [type, multiplier] = attackType;
@@ -180,6 +191,7 @@ function determineTypeDamage(type1, type2) {
 }
 
 function mapOutTypes(dmgMultiplierArr, dmgMultiplierDiv) {
+  dmgMultiplierDiv.innerHTML='';
   dmgMultiplierArr.forEach((type) => {
     dmgMultiplierDiv.innerHTML += `<div class="type-block ${type}"><h2>${type}</h2></div>`;
   });
@@ -234,7 +246,6 @@ function getTypeFromPokemon(pokemon, type1, type2) {
 }
 
 showPokemon.addEventListener("click", () => {
-  console.log("I got clicked");
   hideSection(typeResultsSection);
   showSection(matchingPokemonSection);
 });
@@ -319,6 +330,7 @@ function makeCard(pokemon) {
           : ""
       }
       </div>
+      <h1>Learn More!</h1>
       <ul class="pokemon-sites">
           <li class="web-button bulbapedia"><a href=${bulbapediaURL}>
             <img src="../images/120px-Bulbapedia_bulb.png" alt='Bulbapedia'>Bulbapedia</a><li>
@@ -329,3 +341,17 @@ function makeCard(pokemon) {
         </ul>
     </div>`;
 }
+
+const returnToTypeMatchup = document.getElementById("rtn-type-match");
+const returnToTypeSelection = document.getElementById("rtn-type-selection");
+
+returnToTypeMatchup.addEventListener("click", () => {
+  hideSection(matchingPokemonSection);
+  showSection(typeResultsSection);
+});
+returnToTypeSelection.addEventListener("click", () => {
+  hideSection(typeResultsSection);
+  showSection(typeSelectionSection);
+  pokemonDropdown2.value = "";
+  pokemonDropdown1.value = "";
+});
