@@ -298,21 +298,33 @@ function makeCard(pokemon) {
 
   let pokemonImgUrl = pokemon.sprites.other["official-artwork"].front_default;
 
+  let firstPokemonType = pokemon.types[0].type.name;
+  let secondPokemonType = pokemon.types[1]?.type.name;
+
   let bulbapediaURL = `https://bulbapedia.bulbagarden.net/wiki/${pokemonName}_(Pok%C3%A9mon)`;
   let serebiiURL = `https://www.serebii.net/pokedex/${pokedexNumber}.shtml`;
   let smogonURL = `https://www.smogon.com/dex/rb/pokemon/${lcPokemonName}/`;
 
   randomPokemon.innerHTML = `
     <div class="random-pokemon">
+    <h1>Featured Pokemon</h1>
       <img class="random-pokemon-img" src=${pokemonImgUrl} alt=${pokemonName}/>
       <h1>${pokedexNumber}</h1>
       <h3>${pokemonName}</h3>
+      <div class="type-frame">
+      <div class="type-block ${firstPokemonType}"><h2>${firstPokemonType}</h2></div>
+      ${
+        secondPokemonType
+          ? `<div class="type-block ${secondPokemonType}"><h2>${secondPokemonType}</h2></div>`
+          : ""
+      }
+      </div>
       <ul class="pokemon-sites">
-          <li><a href=${bulbapediaURL}>
-            <img src="../images/120px-Bulbapedia_bulb.png" alt='Bulbapedia'></a>Bulbapedia<li>
-          <li><a href=${serebiiURL}>
+          <li class="web-button bulbapedia"><a href=${bulbapediaURL}>
+            <img src="../images/120px-Bulbapedia_bulb.png" alt='Bulbapedia'>Bulbapedia</a><li>
+          <li class="web-button serebii"><a href=${serebiiURL}>
             <img src="../images/serebii.png" alt='Serebii'>Serebii</a><li>
-          <li><a href=${smogonURL}>
+          <li class="web-button smogon"><a href=${smogonURL}>
             <img src="../images/smogon.png" alt='Smogon'>Smogon</a><li>
         </ul>
     </div>`;
