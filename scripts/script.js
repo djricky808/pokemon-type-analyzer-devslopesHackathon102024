@@ -1,7 +1,6 @@
 //Set up Types
 import { typeEffectiveness } from "./typeEffectiveness.js";
 const typeMatchups = Object.entries(typeEffectiveness);
-console.log(typeEffectiveness);
 
 const types = [];
 
@@ -9,8 +8,6 @@ typeMatchups.forEach((type) => {
   const [pokemonType] = type;
   types.push(pokemonType);
 });
-
-console.log(types);
 
 //Set up API call.
 const URL = "https://pokeapi.co/api/v2/pokemon";
@@ -165,7 +162,6 @@ function determineTypeDamage(type1, type2) {
     typeMatchups.filter((type) => type[0] === type1)[0][1]
   );
 
-  console.log(type1Defenses);
   let damageTotalbyType = [];
 
   for (let i = 0; i < type1Defenses.length; i++) {
@@ -179,7 +175,6 @@ function determineTypeDamage(type1, type2) {
       damageTotalbyType.push([type, multiplier]);
     }
   }
-  console.log(damageTotalbyType);
 
   damageTotalbyType.forEach((attackType) => {
     let [type, multiplier] = attackType;
@@ -197,12 +192,6 @@ function determineTypeDamage(type1, type2) {
       noDamage.push(type);
     }
   });
-  console.log(quadrupleDamage);
-  console.log(doubleDamage);
-  console.log(normalDamage);
-  console.log(halfDamage);
-  console.log(quarterDamage);
-  console.log(noDamage);
 
   mapOutTypes(quadrupleDamage, quadrupleDamageDiv);
   mapOutTypes(doubleDamage, doubleDamageDiv);
@@ -275,7 +264,6 @@ function setUpMatchingPokemon(matchingPokemon) {
     let lcPokemonName = pokemonName.toLowerCase();
 
     let pokedexNumber = pokemon.id.toString().padStart(3, "0");
-    console.log(pokedexNumber);
 
     let pokemonSpriteUrl =
       pokemon.sprites.versions["generation-iii"]["firered-leafgreen"]
@@ -303,7 +291,6 @@ function setUpMatchingPokemon(matchingPokemon) {
 }
 
 function pickRandomPokemon(matchingPokemon) {
-  console.log(matchingPokemon);
   let randomPokemon = Math.floor(Math.random() * matchingPokemon.length);
   makeCard(matchingPokemon[randomPokemon]);
 }
@@ -315,7 +302,6 @@ function makeCard(pokemon) {
   let lcPokemonName = pokemonName.toLowerCase();
 
   let pokedexNumber = pokemon.id.toString().padStart(3, "0");
-  console.log(pokedexNumber);
 
   let pokemonImgUrl = pokemon.sprites.other["official-artwork"].front_default;
 
