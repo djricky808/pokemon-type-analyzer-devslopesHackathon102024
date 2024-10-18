@@ -276,7 +276,7 @@ function setUpMatchingPokemon(matchingPokemon) {
     matchedTypes.innerHTML += `
       <div class="pokemon-tab">
         <h3>${pokedexNumber}</h3>
-        <h3>${pokemonName}</h3>
+        <h>${pokemonName}</h>
         <img src=${pokemonSpriteUrl} alt=${pokemonName}></img>
         <ul class="pokemon-sites">
           <li><a href=${bulbapediaURL} target='_blank'>
@@ -317,7 +317,7 @@ function makeCard(pokemon) {
       <h1>Featured Pokemon</h1>
       <img class="random-pokemon-img" src=${pokemonImgUrl} alt=${pokemonName}/>
       <h1>${pokedexNumber}</h1>
-      <h3>${pokemonName}</h3>
+      <h1>${pokemonName}</h1>
       <div class="type-frame">
         <div class="type-block ${firstPokemonType}"><h2>${firstPokemonType}</h2></div>
         ${
@@ -330,7 +330,7 @@ function makeCard(pokemon) {
       <ul class="pokemon-sites">
         <li class="web-button bulbapedia">
           <a href=${bulbapediaURL} target='_blank'>
-            <img src="../images/120px-Bulbapedia_bulb.png" alt='Bulbapedia'/>Bulbapedia>
+            <img src="../images/120px-Bulbapedia_bulb.png" alt='Bulbapedia'/>Bulbapedia
           </a>
         </li>
         <li class="web-button serebii">
