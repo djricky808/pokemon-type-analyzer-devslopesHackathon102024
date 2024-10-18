@@ -270,11 +270,11 @@ function setUpMatchingPokemon(matchingPokemon) {
         <h3>${pokemonName}</h3>
         <img src=${pokemonSpriteUrl} alt=${pokemonName}></img>
         <ul class="pokemon-sites">
-          <li><a href=${bulbapediaURL}>
+          <li><a href=${bulbapediaURL} target='_blank'>
             <img src="../images/120px-Bulbapedia_bulb.png" alt='Bulbapedia'></a><li>
-          <li><a href=${serebiiURL}>
+          <li><a href=${serebiiURL} target='_blank'>
             <img src="../images/serebii.png" alt='Serebii'></a><li>
-          <li><a href=${smogonURL}>
+          <li><a href=${smogonURL} target='_blank'>
             <img src="../images/smogon.png" alt='Smogon'></a><li>
         </ul>
       </div>`;
@@ -321,12 +321,12 @@ function makeCard(pokemon) {
       </div>
       <h1>Learn More!</h1>
       <ul class="pokemon-sites">
-          <li class="web-button bulbapedia"><a href=${bulbapediaURL}>
+          <li class="web-button bulbapedia"><a href=${bulbapediaURL} target='_blank'>
             <img src="../images/120px-Bulbapedia_bulb.png" alt='Bulbapedia'>Bulbapedia</a><li>
-          <li class="web-button serebii"><a href=${serebiiURL}>
+          <li class="web-button serebii"><a href=${serebiiURL} target='_blank'>
             <img src="../images/serebii.png" alt='Serebii'>Serebii</a><li>
           <li class="web-button smogon"><a href=${smogonURL}>
-            <img src="../images/smogon.png" alt='Smogon'>Smogon</a><li>
+            <img src="../images/smogon.png" alt='Smogon' target='_blank'>Smogon</a><li>
         </ul>
     </div>`;
 }
