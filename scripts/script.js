@@ -352,6 +352,6 @@ returnToTypeMatchup.addEventListener("click", () => {
 returnToTypeSelection.addEventListener("click", () => {
   hideSection(typeResultsSection);
   showSection(typeSelectionSection);
-  pokemonDropdown2.value = "";
+  disableSecondTypeSelection();
   pokemonDropdown1.value = "";
 });
