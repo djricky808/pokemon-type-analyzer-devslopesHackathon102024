@@ -190,6 +190,7 @@ const matchingPokemonSection = document.getElementById(
 const randomPokemon = document.querySelector(".random-pokemon");
 const matchedTypes = document.querySelector(".matched-types");
 const pureTypes = document.querySelector(".pure-types");
+const pokemonCount = document.querySelector(".pokemon-count");
 
 function getTypeFromPokemon(pokemon, type1, type2) {
   let pokemonThatMatchedSelectedTypes = [];
@@ -218,11 +219,14 @@ function getTypeFromPokemon(pokemon, type1, type2) {
       }
     }
   });
-  console.log("--------DUAL TYPES----------");
-  setUpMatchingPokemon(pokemonThatMatchedSelectedTypes, "matching-types");
-  console.log("--------PURE TYPES----------");
-  setUpMatchingPokemon(purePokemonType, "pure-types");
-  pickRandomPokemon(pokemonThatMatchedSelectedTypes);
+  if (pokemonThatMatchedSelectedTypes.length === 0) {
+    pokemonCount.innerHTML =
+      "<h3>There are no Pokemon with this typing in Kanto</h3>";
+  } else {
+    setUpMatchingPokemon(pokemonThatMatchedSelectedTypes, "matching-types");
+    setUpMatchingPokemon(purePokemonType, "pure-types");
+    pickRandomPokemon(pokemonThatMatchedSelectedTypes);
+  }
 }
 
 function setUpMatchingPokemon(matchingPokemon, grouping) {
@@ -255,13 +259,21 @@ function setUpMatchingPokemon(matchingPokemon, grouping) {
         <h3>${pokedexNumber}</h3>
         <h3>${pokemonName}</h3>
         <img src=${pokemonSpriteUrl} alt=${pokemonName}></img>
+        <ul class="pokemon-sites">
+          <li><a href=${bulbapediaURL}>
+            <img src="../images/120px-Bulbapedia_bulb.png" alt='Bulbapedia'></a><li>
+          <li><a href=${serebiiURL}>
+            <img src="../images/serebii.png" alt='Serebii'></a><li>
+          <li><a href=${smogonURL}>
+            <img src="../images/smogon.png" alt='Smogon'></a><li>
+        </ul>
       </div>`;
   });
 }
 
 function pickRandomPokemon(matchingPokemon) {
   console.log(matchingPokemon);
-  let randomPokemon = Math.floor(Math.random()) * matchingPokemon.length + 1;
+  let randomPokemon = Math.floor(Math.random() * matchingPokemon.length);
   makeCard(matchingPokemon[randomPokemon]);
 }
 
@@ -286,9 +298,12 @@ function makeCard(pokemon) {
       <h1>${pokedexNumber}</h1>
       <h3>${pokemonName}</h3>
       <ul class="pokemon-sites">
-        <li><a href=${bulbapediaURL}>Bulbapedia<li>
-        <li><a href=${serebiiURL}>Serebii<li>
-        <li><a href=${smogonURL}>Smogon<li>
-      </ul>
+          <li><a href=${bulbapediaURL}>
+            <img src="../images/120px-Bulbapedia_bulb.png" alt='Bulbapedia'></a>Bulbapedia<li>
+          <li><a href=${serebiiURL}>
+            <img src="../images/serebii.png" alt='Serebii'>Serebii</a><li>
+          <li><a href=${smogonURL}>
+            <img src="../images/smogon.png" alt='Smogon'>Smogon</a><li>
+        </ul>
     </div>`;
 }
