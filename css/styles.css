@@ -134,6 +134,7 @@ h1 {
   display: flex;
   margin: 25px auto;
   justify-content: space-around;
+  align-items: center;
   background-color: rgb(238, 235, 235);
   border: 2px solid black;
   width: 90%;

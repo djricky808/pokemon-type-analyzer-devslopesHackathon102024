@@ -339,8 +339,8 @@ function makeCard(pokemon) {
           </a>
         <li>
         <li class="web-button smogon">
-          <a href=${smogonURL}>
-            <img src="../images/smogon.png" alt='Smogon' target='_blank'/>Smogon
+          <a href=${smogonURL} target='_blank'>
+            <img src="../images/smogon.png" alt='Smogon'/>Smogon
           </a>
         <li>
       </ul>
