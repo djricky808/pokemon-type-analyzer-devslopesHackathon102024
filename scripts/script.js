@@ -203,11 +203,10 @@ const matchingPokemonSection = document.getElementById(
 );
 const randomPokemon = document.querySelector(".random-pokemon");
 const matchedTypes = document.querySelector(".matched-types");
-const pureTypes = document.querySelector(".pure-types");
+
 
 function getTypeFromPokemon(pokemon, type1, type2) {
   let pokemonThatMatchedSelectedTypes = [];
-  let purePokemonType = [];
   pokemon.forEach((pokemon) => {
     let firstPokemonType = pokemon.types[0].type.name;
     let secondPokemonType = pokemon.types[1]?.type.name;
@@ -223,9 +222,6 @@ function getTypeFromPokemon(pokemon, type1, type2) {
       }
     } else {
       if (firstPokemonType === type1) {
-        if (!secondPokemonType) {
-          purePokemonType.push(pokemon);
-        }
         pokemonThatMatchedSelectedTypes.push(pokemon);
       } else if (secondPokemonType === type1) {
         pokemonThatMatchedSelectedTypes.push(pokemon);
@@ -239,8 +235,7 @@ function getTypeFromPokemon(pokemon, type1, type2) {
   } else {
     pokemonCount.innerHTML = `<h3 > There are ${pokemonThatMatchedSelectedTypes.length} Pokemon with this typing in Kanto!</h3>`;
     showPokemon.disabled = false;
-    setUpMatchingPokemon(pokemonThatMatchedSelectedTypes, "matching-types");
-    setUpMatchingPokemon(purePokemonType, "pure-types");
+    setUpMatchingPokemon(pokemonThatMatchedSelectedTypes);
     pickRandomPokemon(pokemonThatMatchedSelectedTypes);
   }
 }
@@ -250,12 +245,8 @@ showPokemon.addEventListener("click", () => {
   showSection(matchingPokemonSection);
 });
 
-function setUpMatchingPokemon(matchingPokemon, grouping) {
-  if (grouping === "pure-types") {
-    pureTypes.innerHTML = "";
-  } else {
-    matchedTypes.innerHTML = "";
-  }
+function setUpMatchingPokemon(matchingPokemon) {
+  matchedTypes.innerHTML = "";
   matchingPokemon.forEach((pokemon) => {
     let pokemonName =
       pokemon.forms[0].name.charAt(0).toUpperCase() +
@@ -273,9 +264,7 @@ function setUpMatchingPokemon(matchingPokemon, grouping) {
     let serebiiURL = `https://www.serebii.net/pokedex/${pokedexNumber}.shtml`;
     let smogonURL = `https://www.smogon.com/dex/rb/pokemon/${lcPokemonName}/`;
 
-    let typeDivGroup = grouping === "pure-types" ? pureTypes : matchedTypes;
-
-    typeDivGroup.innerHTML += `
+    matchedTypes.innerHTML += `
       <div class="pokemon-tab">
         <h3>${pokedexNumber}</h3>
         <h3>${pokemonName}</h3>
@@ -349,6 +338,7 @@ returnToTypeMatchup.addEventListener("click", () => {
   hideSection(matchingPokemonSection);
   showSection(typeResultsSection);
 });
+
 returnToTypeSelection.addEventListener("click", () => {
   hideSection(typeResultsSection);
   showSection(typeSelectionSection);
